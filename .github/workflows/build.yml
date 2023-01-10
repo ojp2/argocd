@@ -10,5 +10,5 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASSWORD"
       - name: Push Docker image
-        run: docker push cyriltech/argocd:my-image:${{ github.sha }}
+        run: docker push argocd:my-image:${{ github.sha }}
 
