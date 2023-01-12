@@ -1,19 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: content-build
+  labels:
+    app: content-build
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: myapp
-  replicas: 2
+      app: content-build
   template:
     metadata:
       labels:
-        app: myapp
+        app: content-build
     spec:
       containers:
-      - name: myapp
-        image: nanajanashia/argocd-app:1.0
-        ports:
-        - containerPort: 8080
+      - name: content-build
+        image: {{ .Values.contentBuildImage }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ray-website
+  labels:
+    app: ray-website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ray-website
+  template:
+    metadata:
+      labels:
+        app: ray-website
+    spec:
+      containers:
+      - name: ray-website
+        image: {{ .Values.webAppImage }}
+
